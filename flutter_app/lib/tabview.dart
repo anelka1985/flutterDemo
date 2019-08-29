@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TabViewWidget extends StatefulWidget {
+class TabViewWidget extends StatefulWidget  {
   final  String name;
 
   TabViewWidget({Key key, this.name}) : super(key: key);
@@ -9,10 +9,32 @@ class TabViewWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => TabViewState();
 
+
+
 }
 
-class TabViewState extends State<TabViewWidget> {
+class TabViewState extends State<TabViewWidget> with AutomaticKeepAliveClientMixin {
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    var result = 'initstate '+ widget.name ;
+    print(result);
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    var result = 'dispose '+ widget.name;
+    print(result);
+
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -22,4 +44,8 @@ class TabViewState extends State<TabViewWidget> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

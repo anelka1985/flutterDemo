@@ -36,16 +36,16 @@ class _TestState extends State<_Test> {
 
   _renderPage() {
     return [
-      new TabViewWidget(name:"aaaaaaa"),
-      new TabViewWidget(name:"bbbbbbb"),
-      new TabViewWidget(name:"ccccccc"),
+      new TabViewWidget(name: "aaaaaaa"),
+      new TabViewWidget(name: "bbbbbbb"),
+      new TabViewWidget(name: "ccccccc"),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return new _CdqTabWidget(
-        type: _CdqTabWidget.BOTTOM_TAB,
+        type: _CdqTabWidget.TOP_TAB,
         tabItems: _renderTab(),
 
         ///渲染页面
@@ -157,30 +157,44 @@ class CdqTabState extends State<_CdqTabWidget>
 //            isScrollable: true,
 //            indicatorColor: _indicatorColor,
 //          )
+
+        bottom: _type == _CdqTabWidget.BOTTOM_TAB
+            ? null
+            : TabBar(
+                tabs: _tabItems,
+                isScrollable: true,
+                indicatorColor: _indicatorColor,
+                controller: _tabController,
+              ),
       ),
       body: PageView(
         controller: _pageController,
         children: _tabViews,
         onPageChanged: (index) => _tabController.animateTo(index),
       ),
-      bottomNavigationBar: Material(
-        color: _backgroundColor,
-        child: TabBar(
-          tabs: _tabItems,
-          controller: _tabController,
-          indicatorColor: _indicatorColor,
-        ),
-      ),
+
+      bottomNavigationBar: _type == _CdqTabWidget.BOTTOM_TAB
+          ? Material(
+              color: _backgroundColor,
+              child: TabBar(
+                tabs: _tabItems,
+                controller: _tabController,
+                indicatorColor: _indicatorColor,
+              ),
+            )
+          : null,
     );
   }
 
   @override
   void initState() {
+    print("initState");
     _tabController = new TabController(length: _tabItems.length, vsync: this);
   }
 
   @override
   void dispose() {
+    print("dispose");
     _tabController.dispose();
   }
 }
